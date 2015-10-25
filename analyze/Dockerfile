@@ -37,3 +37,5 @@ RUN \
     pip3 install jupyter; \
     #dnf -y update; dnf clean all; \
     :
+
+EXPOSE 8888

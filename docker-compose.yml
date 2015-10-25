@@ -15,3 +15,15 @@ elasticsearch:
   volumes:
   - /scratch/es-data/t1:/usr/share/elasticsearch/data:Z
   command: elasticsearch -Des.cluster.name=es-t -Des.node.name=es-t1
+
+jupyter-analyze:
+  build: ./jupyter-analyze
+  restart: always
+  ports:
+  - '8888:8888'
+  volumes:
+  - /scratch/docker-data/jupyter-data:/data:z
+  links:
+  - elasticsearch:elasticsearch
+  working_dir: /data
+  command: jupyter notebook --NotebookApp.ip=0.0.0.0
