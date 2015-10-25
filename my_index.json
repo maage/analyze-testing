@@ -1,0 +1,13 @@
+{
+  "index":{
+    "analysis":{
+      "analyzer":{
+        "minhash_analyzer":{
+          "type":"custom",
+          "tokenizer":"standard",
+          "filter":["minhash"]
+        }
+      }
+    }
+  }
+}

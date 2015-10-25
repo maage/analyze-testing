@@ -1,0 +1,21 @@
+{
+  "my_type" : {
+    "properties" : {
+      "message" : {
+        "type" : "string",
+        "copy_to" : [
+          "minhash_value"
+        ]
+      },
+      "bits" : {
+        "type" : "string",
+        "store" : true
+      },
+      "minhash_value" : {
+        "type" : "minhash",
+        "minhash_analyzer" : "minhash_analyzer",
+        "copy_bits_to" : "bits"
+      }
+    }
+  }
+}
