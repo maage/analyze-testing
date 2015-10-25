@@ -36,6 +36,7 @@ my $scroll = $e->scroll_helper(
 
 my %h;
 my $maxlen = 128;
+my $maxid = 0;
 my @bfreq;
 
 sub handle_doc {
@@ -56,6 +57,8 @@ sub handle_doc {
       $bfreq{$i.' '.$b} ++;
     }
   }
+
+  $maxid = $_->{_id} if ($_->{_id} > $maxid);
 }
 
 while (my $doc = $scroll->next) {
@@ -73,13 +76,17 @@ while (my $doc = $scroll->next) {
 #}
 #print "maxlen: $maxlen\n";
 
+my @c = (0 .. (int(($maxid-1)/10000)) );
 for my $k (sort { $bfreq{$a} <=> $bfreq{$b} } keys %bfreq) {
   my ($i, $c) = split(/ /, $k, 2);
   my %cnt;
+  for (@c) { $cnt{$_} = 0 };
   for my $id (@{$bfreq[$i][$c]}) {
-    $cnt{ int(($id-0)/10000) } ++;
+    $cnt{ int(($id-1)/10000) } ++;
   }
-  printf("%s %d %d %d\n", $k, $bfreq{$k}, $cnt{0}, $cnt{1});
+  my @cnt = map { $cnt{$_} } @c;
+  my @part = map { $cnt{$_} / $bfreq{$k} } @c;
+  printf("%s %d %s %s\n", $k, $bfreq{$k}, join(' ', @cnt), join(' ', @part));
 }
 
 #print $json->encode(\@bfreq);

@@ -43,11 +43,24 @@ for (1..10000) {
   }
 }
 index_bulk(\@bulk) if (@bulk);
+
 for (1..10000) {
   print "\r$_     ";
   push @bulk,
     { index => { _id => $id } },
     { message => sprintf('ERROR: Why we get this, now %d %f', int($_/5), rand(1000)), },
+  ;
+  $id ++;
+  index_bulk(\@bulk) if (@bulk == 100);
+}
+index_bulk(\@bulk) if (@bulk);
+print "\n";
+
+for (1..10000) {
+  print "\r$_     ";
+  push @bulk,
+    { index => { _id => $id } },
+    { message => sprintf('DEBUG: This message is entirely not for any use in any way.'), },
   ;
   $id ++;
   index_bulk(\@bulk) if (@bulk == 100);
