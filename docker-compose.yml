@@ -1,0 +1,17 @@
+kibana:
+  build: ./kibana-t1
+  restart: always
+  ports:
+  - '5601:5601'
+  links:
+  - elasticsearch:elasticsearch
+
+elasticsearch:
+  build: ./elasticsearch-t1
+  restart: always
+  ports:
+  - '9200:9200'
+  - '9300:9300'
+  volumes:
+  - /scratch/es-data/t1:/usr/share/elasticsearch/data:Z
+  command: elasticsearch -Des.cluster.name=es-t -Des.node.name=es-t1
