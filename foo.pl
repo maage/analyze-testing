@@ -24,46 +24,43 @@ my @bulk;
 my $id = 1;
 print "0";
 for (1..10000) {
-  print "\r$_     ";
   push @bulk,
     { index => { _id => $id } },
     { message => sprintf('Prefix something %f suffix other', rand(1000)), },
   ;
   $id ++;
-  index_bulk(\@bulk) if (@bulk == 100);
-  if (0) {
-    $e->index(
-      index => 'my_index',
-      type => 'my_type',
-      id => $_,
-      body => {
-        message => sprintf('Prefix something %f suffix other', rand(1000)),
-      },
-    );
+  if (@bulk == 100) {
+    index_bulk(\@bulk);
+    print "\r$_     ";
   }
-}
-index_bulk(\@bulk) if (@bulk);
-
-for (1..10000) {
-  print "\r$_     ";
-  push @bulk,
-    { index => { _id => $id } },
-    { message => sprintf('ERROR: Why we get this, now %d %f', int($_/5), rand(1000)), },
-  ;
-  $id ++;
-  index_bulk(\@bulk) if (@bulk == 100);
 }
 index_bulk(\@bulk) if (@bulk);
 print "\n";
 
 for (1..10000) {
-  print "\r$_     ";
+  push @bulk,
+    { index => { _id => $id } },
+    { message => sprintf('ERROR: Why we get this, now %d %f', int($_/5), rand(1000)), },
+  ;
+  $id ++;
+  if (@bulk == 100) {
+    index_bulk(\@bulk);
+    print "\r$_     ";
+  }
+}
+index_bulk(\@bulk) if (@bulk);
+print "\n";
+
+for (1..10000) {
   push @bulk,
     { index => { _id => $id } },
     { message => sprintf('DEBUG: This message is entirely not for any use in any way.'), },
   ;
   $id ++;
-  index_bulk(\@bulk) if (@bulk == 100);
+  if (@bulk == 100) {
+    index_bulk(\@bulk);
+    print "\r$_     ";
+  }
 }
 index_bulk(\@bulk) if (@bulk);
 print "\n";
