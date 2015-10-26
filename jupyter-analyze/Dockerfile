@@ -34,3 +34,7 @@ RUN \
     conda build bitvector/; \
     conda install --yes BitVector --use-local; \
     :
+
+RUN \
+    conda install --yes bokeh; \
+    :
