@@ -38,3 +38,41 @@ RUN \
 RUN \
     conda install --yes bokeh; \
     :
+
+RUN \
+    conda skeleton pypi colormath && \
+    conda build colormath/ && \
+    conda install --yes colormath --use-local && \
+    :
+
+RUN \
+    apt-get update && \
+    apt-get install -y --no-install-recommends \
+	software-properties-common \
+    && :
+RUN \
+    add-apt-repository -y 'deb http://www.deb-multimedia.org jessie main non-free' && \
+    apt-get update && \
+    apt-get install -y --force-yes \
+	deb-multimedia-keyring \
+    && :
+RUN \
+    apt-get update && \
+    apt-get install -y \
+	ffmpeg \
+    && :
+RUN \
+    apt-get update && \
+    apt-get dist-upgrade -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    :
+    
+
+RUN \
+    conda skeleton pypi toyplot && \
+    cat toyplot/meta.yaml
+RUN \
+    conda build toyplot/ && \
+    conda install --yes toyplot --use-local && \
+    :
