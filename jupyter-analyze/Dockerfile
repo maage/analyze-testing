@@ -49,19 +49,16 @@ RUN \
     apt-get update && \
     apt-get install -y --no-install-recommends \
 	software-properties-common \
-    && :
-RUN \
+    && \
     add-apt-repository -y 'deb http://www.deb-multimedia.org jessie main non-free' && \
     apt-get update && \
     apt-get install -y --force-yes \
 	deb-multimedia-keyring \
-    && :
-RUN \
+    && \
     apt-get update && \
     apt-get install -y \
 	ffmpeg \
-    && :
-RUN \
+    && \
     apt-get update && \
     apt-get dist-upgrade -y && \
     apt-get clean && \
@@ -70,9 +67,19 @@ RUN \
     
 
 RUN \
+    conda install --yes cairo && \
+    conda install -c https://conda.anaconda.org/fallen pycairo && \
+    conda install -c https://conda.anaconda.org/inso pyqt5 && \
+    conda config --add channels fallen && \
+    conda config --add channels inso && \
     conda skeleton pypi toyplot && \
-    cat toyplot/meta.yaml
-RUN \
+    sed -i '/run:/{s/$/\n    - cairo/};\
+/^test:/{s/$/\n  requires:\n    - cairo/};\
+/toyplot\.cairo/d;\
+/toyplot\.qt/d;\
+#/imports:/{s/$/\n    - cairo/};\
+' toyplot/meta.yaml && \
+    cat toyplot/meta.yaml && \
     conda build toyplot/ && \
     conda install --yes toyplot --use-local && \
     :
