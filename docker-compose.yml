@@ -27,3 +27,11 @@ jupyter-analyze:
   - elasticsearch:elasticsearch
   working_dir: /data
   command: jupyter notebook --NotebookApp.ip=0.0.0.0
+
+analyze:
+  build: ./analyze
+  restart: always
+  links:
+  - elasticsearch:elasticsearch
+  working_dir: /data
+  command: sleep 36000
