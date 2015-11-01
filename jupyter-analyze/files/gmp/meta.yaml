@@ -1,0 +1,15 @@
+package:
+  name: gmp
+  version: 6.0.0a
+
+source:
+  fn: gmp-6.0.0a.tar.xz
+  url: https://gmplib.org/download/gmp/gmp-6.0.0a.tar.xz
+
+about:
+  home: http://gmplib.org/
+  license: LGPL 3
+
+test:
+  files:
+    - test.c

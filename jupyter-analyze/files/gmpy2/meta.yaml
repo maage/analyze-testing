@@ -1,0 +1,29 @@
+package:
+  name: gmpy2
+  version: 2.0.7
+
+source:
+  fn: gmpy2-2.0.7.zip
+  url: https://pypi.python.org/packages/source/g/gmpy2/gmpy2-2.0.7.zip
+  md5: b5aada3ee5afb316ea94604f45192054
+
+requirements:
+  build:
+    - gmp
+    - mpfr
+    - mpc
+    - python
+  run:
+    - gmp
+    - mpfr
+    - mpc
+    - python
+
+test:
+  imports:
+    - gmpy2
+
+about:
+  home: https://code.google.com/p/gmpy/
+  license: LGPL
+  summary: GMP/MPIR, MPFR, and MPC interface to Python 2.6+ and 3.x

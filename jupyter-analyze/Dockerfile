@@ -83,3 +83,42 @@ RUN \
     conda build toyplot/ && \
     conda install --yes toyplot --use-local && \
     :
+
+RUN \
+    apt-get update && \
+    apt-get install -y --no-install-recommends \
+	bison \
+        file \
+	libncurses-dev \
+	libreadline-dev \
+	m4 \
+        mt-st \
+    && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    :
+
+COPY ["files/gmp/*", "gmp/"]
+RUN \
+    conda build gmp/ && \
+    conda install --yes gmp --use-local && \
+    :
+
+COPY ["files/mpfr/*", "mpfr/"]
+RUN \
+    conda build mpfr/ && \
+    conda install --yes mpfr --use-local && \
+    :
+
+COPY ["files/mpc/*", "mpc/"]
+RUN \
+    conda build mpc/ && \
+    conda install --yes mpc --use-local && \
+    :
+
+COPY ["files/gmpy2/*", "gmpy2/"]
+RUN \
+    conda build gmpy2/ && \
+    conda install --yes gmpy2 --use-local && \
+    :
+    
