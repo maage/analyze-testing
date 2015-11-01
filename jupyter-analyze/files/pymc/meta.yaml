@@ -1,0 +1,31 @@
+package:
+  name: pymc
+  version: 2.3.6
+
+source:
+  fn:  pymc-2.3.6.tar.gz
+  url: https://pypi.python.org/packages/source/p/pymc/pymc-2.3.6.tar.gz
+  md5: 60d5c454a92d3e5c8a7b1204cba6731a
+
+requirements:
+  build:
+    - python
+    - numpy
+    - gcc
+
+  run:
+    - python
+    - numpy
+    - matplotlib
+    - scipy
+
+test:
+  imports:
+    - pymc
+
+  requires:
+    - nose
+
+about:
+  home: https://github.com/pymc-devs/pymc
+  license: Academic Free License (http://opensource.org/licenses/AFL-3.0)

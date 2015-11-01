@@ -64,7 +64,6 @@ RUN \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     :
-    
 
 RUN \
     conda install --yes cairo && \
@@ -121,4 +120,10 @@ RUN \
     conda build gmpy2/ && \
     conda install --yes gmpy2 --use-local && \
     :
-    
+
+COPY ["files/pymc/*", "pymc/"]
+RUN \
+    conda build pymc/ && \
+    conda install --yes pymc --use-local && \
+    :
+
